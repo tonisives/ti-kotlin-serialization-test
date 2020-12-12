@@ -1,6 +1,6 @@
 # HMKit JSON tests
 
-Here are some tests that complement my kotlinx.serialization blog post.
+Here are some tests to complement my kotlinx.serialization blog post.
 
 ### Setup
 
