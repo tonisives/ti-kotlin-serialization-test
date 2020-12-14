@@ -14,7 +14,7 @@ class TestKotlinSerialization {
 
     @Test
     fun objectsToJsonAndBack() {
-        val credentials = Credentials("publicKey", "")
+        val credentials = Credentials("publicKey", "privateKey")
 
         val stringValue = Json.encodeToString(credentials)
         println(stringValue)
@@ -29,7 +29,7 @@ class TestKotlinSerialization {
         val credentials = JsonObject(
             mapOf(
                 "publicKey" to JsonPrimitive("publicKey"),
-                "password" to JsonPrimitive("password")
+                "privateKey" to JsonPrimitive("privateKey")
             )
         )
 
@@ -38,10 +38,22 @@ class TestKotlinSerialization {
     }
 
     @Test
+    fun createJsonManuallyDsl() {
+        val credentials = buildJsonArray {
+            addJsonObject {
+                put("publicKey", "publickey")
+                put("privateKey", "privateKey")
+            }
+        }
+
+        println(credentials.toString())
+    }
+
+    @Test
     fun prettyPrintJson() {
         val format = Json { prettyPrint = true }
         val input = """
-            [{"publicKey":"publicKey","password":"password"}]
+            {"publicKey":"publicKey","privateKey":"privateKey"}
         """.trimIndent()
 
         val jsonElement = format.decodeFromString<JsonElement>(input)
